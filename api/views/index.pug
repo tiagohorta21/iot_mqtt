@@ -1,5 +1,38 @@
 html
   head
-    title= title
+    title= 'IOT MQTT'
   body
-    h1= message
+    p= 'Turn on/off the LED'
+
+
+    input(type='button' value='ON' onclick='setOn()' )
+    =" "
+    input(type='button' value='OFF' onclick='setOff()' )
+
+    p= 'Current Voltage:'
+      span(id='voltage')= voltage
+    p= 'Time on:'
+      span(id='timer')= timer
+    p= 'Time on on max voltage: '
+      span(id='maxVoltageTimer')= maxVoltageTimer
+script.
+  function updateValues() {
+    setInterval(() => {
+      fetch('/values').then((r) => r.json()).then((response) => {
+        document.getElementById('voltage').innerText = response.voltage
+        document.getElementById('timer').innerText = response.timer
+        document.getElementById('maxVoltageTimer').innerText = response.maxVoltageTimer
+      })
+    }, 1000)
+  }
+
+  updateValues();
+
+  function setOff() {
+    fetch('/off').catch(e => console.error(e))
+  }
+
+  function setOn() {
+    fetch('/on').catch(e => console.error(e))
+  }
+
