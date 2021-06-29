@@ -3,7 +3,7 @@ const express = require('express')
 const mqtt = require('mqtt')
 const app = express()
 // MQTT
-const client  = mqtt.connect('mqtt://192.168.1.202')
+const client  = mqtt.connect('mqtt://192.168.1.201')
 const port = 3000
 
 app.set('view engine', 'pug')
