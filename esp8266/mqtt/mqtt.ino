@@ -63,7 +63,7 @@ void callback(char *topic, byte *payload, unsigned int length) {
  Serial.print("Message: ");
  
  for (int i = 0; i < length; i++) {
-  int message = (char) payload[i];
+  String message = String((char) payload[i]);
   Serial.print(message);
 
   if(message == 1){
