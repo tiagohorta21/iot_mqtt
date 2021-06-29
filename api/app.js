@@ -12,6 +12,7 @@ const TOPIC_VALUES = 'values'
 
 let startTimer = false;
 let timer = 0;
+let voltage = 0,
 
 function updateTimer() {
   if(startTimer) {
@@ -27,17 +28,14 @@ function millisToMinutesAndSeconds(millis) {
 
 app.get('/', (req, res) => {
   startTimer = true;
-  const voltage = 1;
 
   res.render('index', { 
-     voltage:voltage, 
+     voltage, 
      timer: millisToMinutesAndSeconds(timer)
   })
 })
 
 app.get('/values', (req, res) => {
-  const voltage = 1;
-
   res.send({
     voltage,
     timer: millisToMinutesAndSeconds(timer)
@@ -82,12 +80,13 @@ app.listen(port, () => {
   client.on('message', function (topic, message) {
     switch (topic) {
       case TOPIC_VALUES:
+        voltage = message.toString();
         console.log(`Message arrived in topic: ${topic.toString()}`);
-        console.log(`Message: ${message.toString()}`)
+        console.log(`Message: ${message.toString()}`);
         break;
       case TOPIC_COMMANDS:
         console.log(`Message arrived in topic: ${topic.toString()}`);
-        console.log(`Message: ${message.toString()}`)
+        console.log(`Message: ${message.toString()}`);
         break;
       default:
         break;
