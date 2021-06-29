@@ -12,7 +12,7 @@ const TOPIC_VALUES = 'values'
 
 let startTimer = false;
 let timer = 0;
-let voltage = 0,
+let voltage = 0;
 
 function updateTimer() {
   if(startTimer) {
@@ -82,11 +82,11 @@ app.listen(port, () => {
       case TOPIC_VALUES:
         voltage = message.toString();
         console.log(`Message arrived in topic: ${topic.toString()}`);
-        console.log(`Message: ${message.toString()}`);
+        console.log(`Message: ${message.toString()}`)
         break;
       case TOPIC_COMMANDS:
         console.log(`Message arrived in topic: ${topic.toString()}`);
-        console.log(`Message: ${message.toString()}`);
+        console.log(`Message: ${message.toString()}`)
         break;
       default:
         break;
