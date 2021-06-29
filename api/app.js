@@ -12,7 +12,6 @@ const TOPIC_VALUES = 'values'
 
 let startTimer = false;
 let timer = 0;
-const messages = [];
 
 function updateTimer() {
   if(startTimer) {
@@ -83,14 +82,14 @@ app.listen(port, () => {
   client.on('message', function (topic, message) {
     switch (topic) {
       case TOPIC_VALUES:
-        messages.push(message.toString())
-        console.log(message.toString())
+        console.log(`Message arrived in topic: ${topic.toString()}`);
+        console.log(`Message: ${message.toString()}`)
         break;
       case TOPIC_COMMANDS:
-        console.log(message.toString())
+        console.log(`Message arrived in topic: ${topic.toString()}`);
+        console.log(`Message: ${message.toString()}`)
         break;
       default:
-        console.log(message.toString())
         break;
     }
   })
