@@ -6,7 +6,7 @@ const char *ssid = "Pixel's Lair 2"; // Enter your WiFi name
 const char *password = "CasaDaEstrada";  // Enter WiFi password
 
 // MQTT Broker
-const char *mqtt_broker = "192.168.1.202";
+const char *mqtt_broker = "192.168.1.201";
 const char *topic1 = "values";
 const char *topic2 = "commands";
 const int mqtt_port = 1883;
@@ -63,7 +63,7 @@ void callback(char *topic, byte *payload, unsigned int length) {
  Serial.print("Message: ");
  
  for (int i = 0; i < length; i++) {
-  String message = String((char) payload[i]);
+  int message = (char) payload[i];
   Serial.print(message);
 
   if(message == 1){

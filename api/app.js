@@ -46,13 +46,13 @@ app.get('/values', (req, res) => {
 })
 
 app.get('/on', (req, res) => {
-  client.publish(TOPIC_COMMANDS, 1)
+  client.publish(TOPIC_COMMANDS, "1")
   startTimer = true;
   res.status(200).send()
 })
 
 app.get('/off', (req, res) => {
-  client.publish(TOPIC_COMMANDS, 0)
+  client.publish(TOPIC_COMMANDS, "0")
   startTimer = false;
   timer = 0;
 
