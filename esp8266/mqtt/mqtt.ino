@@ -13,6 +13,10 @@ const int mqtt_port = 1883;
 
 // ESP8266 LED
 int LED = 2;
+int ledOnOff = 0;
+
+// Simulated Voltage
+int voltage = 0;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -52,7 +56,6 @@ void setup() {
 }
  
  // publish and subscribe
- client.publish(topic1, "Hello From ESP8266!");
  client.subscribe(topic1);
  client.subscribe(topic2);
 }
@@ -61,24 +64,44 @@ void callback(char *topic, byte *payload, unsigned int length) {
  Serial.print("Message arrived in topic: ");
  Serial.println(topic);
  Serial.print("Message: ");
+ char *message = (char*) payload;
+ message[length] = '\0';
+ Serial.print(message);
  
- for (int i = 0; i < length; i++) {
-  String message = String((char) payload[i]);
-  Serial.print(message);
+ if(!strncmp(message, "on", length)){
+   digitalWrite(LED, LOW); // Turn LED ON
+   ledOnOff = 1; 
+ }
 
-  if(message == "on"){
-    digitalWrite(LED, LOW); // Turn LED ON 
-  }
-
-  if(message == "off"){
-    digitalWrite(LED, HIGH); // Turn LED OFF
-  }
+ if(!strncmp(message, "off", length)){
+   digitalWrite(LED, HIGH); // Turn LED OFF
+   ledOnOff = 0;
  }
  
  Serial.println();
- Serial.println(" - - - - - - - - - - - -");
+ Serial.println(" - - - - - - - - - - - - - - - - -");
 }
 
 void loop() {
  client.loop();
+ 
+ if(ledOnOff == 0) {
+  if(voltage == 0){
+    voltage = 0;
+  } else {
+    voltage -= 20;
+  }
+ }
+
+ if(ledOnOff == 1){
+  if(voltage == 200){
+    voltage = 200;
+  } else {
+    voltage += 20;
+  }
+ }
+
+ char Voltage[16];
+ client.publish(topic1, itoa(voltage, Voltage, 10));
+ delay(1000);
 }

@@ -84,6 +84,10 @@ app.listen(port, () => {
     switch (topic) {
       case TOPIC_VALUES:
         messages.push(message.toString())
+        console.log(message.toString())
+        break;
+      case TOPIC_COMMANDS:
+        console.log(message.toString())
         break;
       default:
         console.log(message.toString())
