@@ -46,13 +46,13 @@ app.get('/values', (req, res) => {
 })
 
 app.get('/on', (req, res) => {
-  client.publish(TOPIC_COMMANDS, 'on')
+  client.publish(TOPIC_COMMANDS, 1)
   startTimer = true;
   res.status(200).send()
 })
 
 app.get('/off', (req, res) => {
-  client.publish(TOPIC_COMMANDS, 'off')
+  client.publish(TOPIC_COMMANDS, 0)
   startTimer = false;
   timer = 0;
 
@@ -85,6 +85,8 @@ app.listen(port, () => {
       case TOPIC_VALUES:
         messages.push(message.toString())
         break;
+      case TOPIC_COMMANDS:
+        console.log(message.toString())
       default:
         console.log(message.toString())
         break;

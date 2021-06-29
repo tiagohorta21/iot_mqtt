@@ -66,11 +66,11 @@ void callback(char *topic, byte *payload, unsigned int length) {
   String message = String((char) payload[i]);
   Serial.print(message);
 
-  if(message == "on"){
+  if(message == 1){
     digitalWrite(LED, LOW); // Turn LED ON 
   }
 
-  if(message == "off"){
+  if(message == 0){
     digitalWrite(LED, HIGH); // Turn LED OFF
   }
  }
